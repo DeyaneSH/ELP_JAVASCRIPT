@@ -1,0 +1,11 @@
+{
+  "name": "elp_javascript",
+  "version": "1.0.0",
+  "description": "Flip 7 CLI game - JavaScript / Node.js",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "ISC"
+}

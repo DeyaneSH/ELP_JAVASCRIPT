@@ -1,0 +1,27 @@
+[2026-01-25T17:57:15.262Z] [GAME] Démarrage de Flip 7.
+[2026-01-25T17:57:15.263Z] 
+========== TOUR 1 ==========
+[2026-01-25T17:57:15.264Z] [ROUND] Distribution initiale.
+[2026-01-25T17:57:15.264Z] [CARD] 1 reçoit 12 (initial)
+[2026-01-25T17:57:15.265Z] [CARD] 2 reçoit 8 (initial)
+[2026-01-25T17:57:15.265Z] 1 | nombres=[12] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-25T17:57:17.990Z] [CARD] 1 reçoit 8 (hit)
+[2026-01-25T17:57:17.990Z] 2 | nombres=[8] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-25T17:57:18.715Z] [CARD] 2 reçoit 9 (hit)
+[2026-01-25T17:57:18.716Z] 1 | nombres=[12, 8] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-25T17:57:24.678Z] [CARD] 1 reçoit 12 (hit)
+[2026-01-25T17:57:24.679Z] [ELIM] 1 est éliminé du tour (doublon).
+[2026-01-25T17:57:24.679Z] 2 | nombres=[8, 9] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-25T17:57:42.201Z] [GAME] Démarrage de Flip 7.
+[2026-01-25T17:57:42.202Z] 
+========== TOUR 1 ==========
+[2026-01-25T17:57:42.203Z] [ROUND] Distribution initiale.
+[2026-01-25T17:57:42.203Z] [CARD] 1 reçoit 11 (initial)
+[2026-01-25T17:57:42.204Z] [CARD] 2 reçoit [MOD: +10] (initial)
+[2026-01-25T17:57:42.204Z] 1 | nombres=[11] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-25T17:57:43.253Z] [CARD] 1 reçoit 8 (hit)
+[2026-01-25T17:57:43.254Z] 2 | nombres=[] | x2=false | +bonus=10 | secondChance=false | active=true
+[2026-01-25T17:57:43.817Z] [CARD] 2 reçoit 10 (hit)
+[2026-01-25T17:57:43.817Z] 1 | nombres=[11, 8] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-25T17:57:45.629Z] [STAY] 1 reste.
+[2026-01-25T17:57:45.629Z] 2 | nombres=[10] | x2=false | +bonus=10 | secondChance=false | active=true
