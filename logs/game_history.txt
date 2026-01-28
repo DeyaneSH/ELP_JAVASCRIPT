@@ -25,3 +25,432 @@
 [2026-01-25T17:57:43.817Z] 1 | nombres=[11, 8] | x2=false | +bonus=0 | secondChance=false | active=true
 [2026-01-25T17:57:45.629Z] [STAY] 1 reste.
 [2026-01-25T17:57:45.629Z] 2 | nombres=[10] | x2=false | +bonus=10 | secondChance=false | active=true
+[2026-01-25T18:07:35.288Z] [GAME] Démarrage de Flip 7.
+[2026-01-25T18:07:35.290Z] 
+========== TOUR 1 ==========
+[2026-01-25T18:07:35.290Z] [ROUND] Distribution initiale.
+[2026-01-25T18:07:35.290Z] [CARD] 1 reçoit 6 (initial)
+[2026-01-25T18:07:35.291Z] [CARD] 2 reçoit 3 (initial)
+[2026-01-25T18:07:35.291Z] [CARD] 3 reçoit 12 (initial)
+[2026-01-25T18:07:35.291Z] 1 | nombres=[6] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-25T18:07:38.128Z] [CARD] 1 reçoit 5 (hit)
+[2026-01-25T18:07:38.129Z] 2 | nombres=[3] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-25T18:07:40.343Z] [CARD] 2 reçoit 4 (hit)
+[2026-01-25T18:07:40.343Z] 3 | nombres=[12] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-25T18:07:44.191Z] [STAY] 3 reste.
+[2026-01-25T18:07:44.192Z] 1 | nombres=[6, 5] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-25T18:08:02.354Z] [CARD] 1 reçoit [ACTION: Freeze] (hit)
+[2026-01-25T18:08:02.354Z] Choisis un joueur cible :
+[2026-01-25T18:08:02.354Z]   1) 1
+[2026-01-25T18:08:02.355Z]   2) 2
+[2026-01-25T18:08:06.754Z] [FREEZE] 2 est gelé.
+[2026-01-25T18:08:06.754Z] 1 | nombres=[6, 5] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-25T18:08:10.317Z] [CARD] 1 reçoit 9 (hit)
+[2026-01-25T18:08:10.317Z] 1 | nombres=[6, 5, 9] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.008Z] [GAME] Démarrage de Flip 7.
+[2026-01-28T18:28:00.011Z] 
+========== TOUR 1 ==========
+[2026-01-28T18:28:00.011Z] [ROUND] Distribution initiale.
+[2026-01-28T18:28:00.011Z] [CARD] 1 reçoit 5 (initial)
+[2026-01-28T18:28:00.012Z] [CARD] 2 reçoit 8 (initial)
+[2026-01-28T18:28:00.012Z] 1 | nombres=[5] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.012Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.012Z] [CARD] 1 reçoit 11 (hit)
+[2026-01-28T18:28:00.013Z] 2 | nombres=[8] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.013Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.013Z] [CARD] 2 reçoit 4 (hit)
+[2026-01-28T18:28:00.014Z] 1 | nombres=[5, 11] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.014Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.014Z] [CARD] 1 reçoit 11 (hit)
+[2026-01-28T18:28:00.014Z] [ELIM] 1 est éliminé du tour (doublon).
+[2026-01-28T18:28:00.017Z] 2 | nombres=[8, 4] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.017Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.018Z] [CARD] 2 reçoit [ACTION: Freeze] (hit)
+[2026-01-28T18:28:00.018Z] [FREEZE] 2 est gelé.
+[2026-01-28T18:28:00.018Z] 
+[SCORE] Fin du tour.
+[2026-01-28T18:28:00.019Z] 1 → +0 | total=0
+[2026-01-28T18:28:00.019Z] 2 → +0 | total=0
+[2026-01-28T18:28:00.020Z] 
+========== TOUR 2 ==========
+[2026-01-28T18:28:00.020Z] [ROUND] Distribution initiale.
+[2026-01-28T18:28:00.020Z] [CARD] 1 reçoit 8 (initial)
+[2026-01-28T18:28:00.021Z] [CARD] 2 reçoit 12 (initial)
+[2026-01-28T18:28:00.021Z] 1 | nombres=[8] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.021Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.021Z] [CARD] 1 reçoit 10 (hit)
+[2026-01-28T18:28:00.022Z] 2 | nombres=[12] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.022Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.022Z] [CARD] 2 reçoit 11 (hit)
+[2026-01-28T18:28:00.022Z] 1 | nombres=[8, 10] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.023Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.023Z] [CARD] 1 reçoit [MOD: x2] (hit)
+[2026-01-28T18:28:00.023Z] 2 | nombres=[12, 11] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.023Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.024Z] [CARD] 2 reçoit 11 (hit)
+[2026-01-28T18:28:00.024Z] [ELIM] 2 est éliminé du tour (doublon).
+[2026-01-28T18:28:00.024Z] 1 | nombres=[8, 10] | x2=true | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.025Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.025Z] [CARD] 1 reçoit 12 (hit)
+[2026-01-28T18:28:00.025Z] 1 | nombres=[8, 10, 12] | x2=true | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.025Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.026Z] [CARD] 1 reçoit 12 (hit)
+[2026-01-28T18:28:00.026Z] [ELIM] 1 est éliminé du tour (doublon).
+[2026-01-28T18:28:00.026Z] 
+[SCORE] Fin du tour.
+[2026-01-28T18:28:00.026Z] 1 → +0 | total=0
+[2026-01-28T18:28:00.027Z] 2 → +0 | total=0
+[2026-01-28T18:28:00.027Z] 
+========== TOUR 3 ==========
+[2026-01-28T18:28:00.027Z] [ROUND] Distribution initiale.
+[2026-01-28T18:28:00.027Z] [CARD] 1 reçoit 10 (initial)
+[2026-01-28T18:28:00.028Z] [CARD] 2 reçoit 11 (initial)
+[2026-01-28T18:28:00.028Z] 1 | nombres=[10] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.028Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.028Z] [CARD] 1 reçoit 6 (hit)
+[2026-01-28T18:28:00.029Z] 2 | nombres=[11] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.029Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.029Z] [CARD] 2 reçoit 11 (hit)
+[2026-01-28T18:28:00.029Z] [ELIM] 2 est éliminé du tour (doublon).
+[2026-01-28T18:28:00.030Z] 1 | nombres=[10, 6] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.030Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.030Z] [CARD] 1 reçoit 10 (hit)
+[2026-01-28T18:28:00.031Z] [ELIM] 1 est éliminé du tour (doublon).
+[2026-01-28T18:28:00.031Z] 
+[SCORE] Fin du tour.
+[2026-01-28T18:28:00.031Z] 1 → +0 | total=0
+[2026-01-28T18:28:00.031Z] 2 → +0 | total=0
+[2026-01-28T18:28:00.032Z] 
+========== TOUR 4 ==========
+[2026-01-28T18:28:00.032Z] [ROUND] Distribution initiale.
+[2026-01-28T18:28:00.032Z] [CARD] 1 reçoit 3 (initial)
+[2026-01-28T18:28:00.032Z] [CARD] 2 reçoit [ACTION: SecondChance] (initial)
+[2026-01-28T18:28:00.033Z] [SECOND CHANCE] 2 conserve une SecondChance.
+[2026-01-28T18:28:00.033Z] [CARD] 2 reçoit 11 (secondChance)
+[2026-01-28T18:28:00.033Z] 1 | nombres=[3] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.033Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.034Z] [CARD] 1 reçoit 0 (hit)
+[2026-01-28T18:28:00.034Z] 2 | nombres=[11] | x2=false | +bonus=0 | secondChance=true | active=true
+[2026-01-28T18:28:00.034Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.034Z] [CARD] 2 reçoit 7 (hit)
+[2026-01-28T18:28:00.035Z] 1 | nombres=[3, 0] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.035Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.035Z] [CARD] 1 reçoit 7 (hit)
+[2026-01-28T18:28:00.035Z] 2 | nombres=[11, 7] | x2=false | +bonus=0 | secondChance=true | active=true
+[2026-01-28T18:28:00.036Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.036Z] [CARD] 2 reçoit 8 (hit)
+[2026-01-28T18:28:00.037Z] 1 | nombres=[3, 0, 7] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.037Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.037Z] [CARD] 1 reçoit 5 (hit)
+[2026-01-28T18:28:00.038Z] 2 | nombres=[11, 7, 8] | x2=false | +bonus=0 | secondChance=true | active=true
+[2026-01-28T18:28:00.038Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.038Z] [CARD] 2 reçoit [MOD: +4] (hit)
+[2026-01-28T18:28:00.039Z] 1 | nombres=[3, 0, 7, 5] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.039Z] [AUTO] 1 choisit S
+[2026-01-28T18:28:00.039Z] [STAY] 1 reste.
+[2026-01-28T18:28:00.039Z] 2 | nombres=[11, 7, 8] | x2=false | +bonus=4 | secondChance=true | active=true
+[2026-01-28T18:28:00.040Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.040Z] [CARD] 2 reçoit 12 (hit)
+[2026-01-28T18:28:00.040Z] 2 | nombres=[11, 7, 8, 12] | x2=false | +bonus=4 | secondChance=true | active=true
+[2026-01-28T18:28:00.040Z] [AUTO] 2 choisit S
+[2026-01-28T18:28:00.041Z] [STAY] 2 reste.
+[2026-01-28T18:28:00.041Z] 
+[SCORE] Fin du tour.
+[2026-01-28T18:28:00.041Z] 1 → +15 | total=15
+[2026-01-28T18:28:00.041Z] 2 → +42 | total=42
+[2026-01-28T18:28:00.042Z] 
+========== TOUR 5 ==========
+[2026-01-28T18:28:00.042Z] [ROUND] Distribution initiale.
+[2026-01-28T18:28:00.042Z] [CARD] 1 reçoit 9 (initial)
+[2026-01-28T18:28:00.042Z] [CARD] 2 reçoit 8 (initial)
+[2026-01-28T18:28:00.043Z] 1 | nombres=[9] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.043Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.043Z] [CARD] 1 reçoit 9 (hit)
+[2026-01-28T18:28:00.043Z] [ELIM] 1 est éliminé du tour (doublon).
+[2026-01-28T18:28:00.044Z] 2 | nombres=[8] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.044Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.044Z] [CARD] 2 reçoit 10 (hit)
+[2026-01-28T18:28:00.045Z] 2 | nombres=[8, 10] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.045Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.045Z] [CARD] 2 reçoit [ACTION: FlipThree] (hit)
+[2026-01-28T18:28:00.045Z] [FLIP THREE] 2 doit piocher 3 cartes.
+[2026-01-28T18:28:00.046Z] [CARD] 2 reçoit 10 (flipThree)
+[2026-01-28T18:28:00.046Z] [ELIM] 2 est éliminé du tour (doublon).
+[2026-01-28T18:28:00.046Z] 
+[SCORE] Fin du tour.
+[2026-01-28T18:28:00.046Z] 1 → +0 | total=15
+[2026-01-28T18:28:00.047Z] 2 → +0 | total=42
+[2026-01-28T18:28:00.047Z] 
+========== TOUR 6 ==========
+[2026-01-28T18:28:00.047Z] [ROUND] Distribution initiale.
+[2026-01-28T18:28:00.047Z] [CARD] 1 reçoit 3 (initial)
+[2026-01-28T18:28:00.048Z] [CARD] 2 reçoit 10 (initial)
+[2026-01-28T18:28:00.048Z] 1 | nombres=[3] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.048Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.048Z] [CARD] 1 reçoit 8 (hit)
+[2026-01-28T18:28:00.049Z] 2 | nombres=[10] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.049Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.049Z] [CARD] 2 reçoit 11 (hit)
+[2026-01-28T18:28:00.049Z] 1 | nombres=[3, 8] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.050Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.050Z] [CARD] 1 reçoit 10 (hit)
+[2026-01-28T18:28:00.050Z] 2 | nombres=[10, 11] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.051Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.051Z] [CARD] 2 reçoit [MOD: +8] (hit)
+[2026-01-28T18:28:00.051Z] 1 | nombres=[3, 8, 10] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.051Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.052Z] [CARD] 1 reçoit 4 (hit)
+[2026-01-28T18:28:00.052Z] 2 | nombres=[10, 11] | x2=false | +bonus=8 | secondChance=false | active=true
+[2026-01-28T18:28:00.052Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.052Z] [CARD] 2 reçoit 4 (hit)
+[2026-01-28T18:28:00.053Z] 1 | nombres=[3, 8, 10, 4] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.053Z] [AUTO] 1 choisit S
+[2026-01-28T18:28:00.053Z] [STAY] 1 reste.
+[2026-01-28T18:28:00.053Z] 2 | nombres=[10, 11, 4] | x2=false | +bonus=8 | secondChance=false | active=true
+[2026-01-28T18:28:00.054Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.054Z] [CARD] 2 reçoit 2 (hit)
+[2026-01-28T18:28:00.054Z] 2 | nombres=[10, 11, 4, 2] | x2=false | +bonus=8 | secondChance=false | active=true
+[2026-01-28T18:28:00.054Z] [AUTO] 2 choisit S
+[2026-01-28T18:28:00.055Z] [STAY] 2 reste.
+[2026-01-28T18:28:00.055Z] 
+[SCORE] Fin du tour.
+[2026-01-28T18:28:00.055Z] 1 → +25 | total=40
+[2026-01-28T18:28:00.055Z] 2 → +35 | total=77
+[2026-01-28T18:28:00.056Z] 
+========== TOUR 7 ==========
+[2026-01-28T18:28:00.056Z] [ROUND] Distribution initiale.
+[2026-01-28T18:28:00.056Z] [CARD] 1 reçoit 5 (initial)
+[2026-01-28T18:28:00.056Z] [CARD] 2 reçoit 7 (initial)
+[2026-01-28T18:28:00.057Z] 1 | nombres=[5] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.057Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.057Z] [CARD] 1 reçoit 9 (hit)
+[2026-01-28T18:28:00.057Z] 2 | nombres=[7] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.058Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.058Z] [CARD] 2 reçoit 6 (hit)
+[2026-01-28T18:28:00.058Z] 1 | nombres=[5, 9] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.058Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:00.059Z] [CARD] 1 reçoit 12 (hit)
+[2026-01-28T18:28:00.059Z] 2 | nombres=[7, 6] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:00.059Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:00.059Z] [CARD] 2 reçoit [ACTION: Freeze] (hit)
+[2026-01-28T18:28:00.060Z] Choisis un joueur cible :
+[2026-01-28T18:28:00.060Z]   1) 1
+[2026-01-28T18:28:00.060Z]   2) 2
+[2026-01-28T18:28:04.520Z] [FREEZE] 1 est gelé.
+[2026-01-28T18:28:04.521Z] 2 | nombres=[7, 6] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:04.521Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:04.521Z] [CARD] 2 reçoit 7 (hit)
+[2026-01-28T18:28:04.521Z] [ELIM] 2 est éliminé du tour (doublon).
+[2026-01-28T18:28:04.522Z] 
+[SCORE] Fin du tour.
+[2026-01-28T18:28:04.522Z] 1 → +0 | total=40
+[2026-01-28T18:28:04.522Z] 2 → +0 | total=77
+[2026-01-28T18:28:04.522Z] 
+========== TOUR 8 ==========
+[2026-01-28T18:28:04.523Z] [ROUND] Distribution initiale.
+[2026-01-28T18:28:04.523Z] [CARD] 1 reçoit 3 (initial)
+[2026-01-28T18:28:04.523Z] [CARD] 2 reçoit [MOD: +10] (initial)
+[2026-01-28T18:28:04.523Z] 1 | nombres=[3] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:04.524Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:04.524Z] [CARD] 1 reçoit 5 (hit)
+[2026-01-28T18:28:04.524Z] 2 | nombres=[] | x2=false | +bonus=10 | secondChance=false | active=true
+[2026-01-28T18:28:04.524Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:04.525Z] [CARD] 2 reçoit 9 (hit)
+[2026-01-28T18:28:04.525Z] 1 | nombres=[3, 5] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:04.525Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:04.525Z] [CARD] 1 reçoit [ACTION: FlipThree] (hit)
+[2026-01-28T18:28:04.526Z] Choisis un joueur cible :
+[2026-01-28T18:28:04.526Z]   1) 1
+[2026-01-28T18:28:04.526Z]   2) 2
+[2026-01-28T18:28:06.868Z] [FLIP THREE] 1 doit piocher 3 cartes.
+[2026-01-28T18:28:06.869Z] [CARD] 1 reçoit 8 (flipThree)
+[2026-01-28T18:28:06.869Z] [CARD] 1 reçoit 12 (flipThree)
+[2026-01-28T18:28:06.869Z] [CARD] 1 reçoit 7 (flipThree)
+[2026-01-28T18:28:06.869Z] 2 | nombres=[9] | x2=false | +bonus=10 | secondChance=false | active=true
+[2026-01-28T18:28:06.870Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:06.870Z] [CARD] 2 reçoit 1 (hit)
+[2026-01-28T18:28:06.870Z] 1 | nombres=[3, 5, 8, 12, 7] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:06.870Z] [AUTO] 1 choisit S
+[2026-01-28T18:28:06.871Z] [STAY] 1 reste.
+[2026-01-28T18:28:06.871Z] 2 | nombres=[9, 1] | x2=false | +bonus=10 | secondChance=false | active=true
+[2026-01-28T18:28:06.871Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:06.871Z] [CARD] 2 reçoit 5 (hit)
+[2026-01-28T18:28:06.872Z] 2 | nombres=[9, 1, 5] | x2=false | +bonus=10 | secondChance=false | active=true
+[2026-01-28T18:28:06.872Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:06.872Z] [CARD] 2 reçoit 9 (hit)
+[2026-01-28T18:28:06.872Z] [ELIM] 2 est éliminé du tour (doublon).
+[2026-01-28T18:28:06.873Z] 
+[SCORE] Fin du tour.
+[2026-01-28T18:28:06.873Z] 1 → +35 | total=75
+[2026-01-28T18:28:06.873Z] 2 → +0 | total=77
+[2026-01-28T18:28:06.873Z] 
+========== TOUR 9 ==========
+[2026-01-28T18:28:06.874Z] [ROUND] Distribution initiale.
+[2026-01-28T18:28:06.874Z] [CARD] 1 reçoit 7 (initial)
+[2026-01-28T18:28:06.874Z] [CARD] 2 reçoit 6 (initial)
+[2026-01-28T18:28:06.874Z] 1 | nombres=[7] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:06.875Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:06.875Z] [CARD] 1 reçoit [ACTION: SecondChance] (hit)
+[2026-01-28T18:28:06.875Z] [SECOND CHANCE] 1 conserve une SecondChance.
+[2026-01-28T18:28:06.875Z] [CARD] 1 reçoit 6 (secondChance)
+[2026-01-28T18:28:06.876Z] 2 | nombres=[6] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:06.876Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:06.876Z] [CARD] 2 reçoit [MOD: +6] (hit)
+[2026-01-28T18:28:06.876Z] 1 | nombres=[7, 6] | x2=false | +bonus=0 | secondChance=true | active=true
+[2026-01-28T18:28:06.877Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:06.877Z] [CARD] 1 reçoit [ACTION: Freeze] (hit)
+[2026-01-28T18:28:06.877Z] Choisis un joueur cible :
+[2026-01-28T18:28:06.877Z]   1) 1
+[2026-01-28T18:28:06.878Z]   2) 2
+[2026-01-28T18:28:08.898Z] [FREEZE] 1 est gelé.
+[2026-01-28T18:28:08.899Z] 2 | nombres=[6] | x2=false | +bonus=6 | secondChance=false | active=true
+[2026-01-28T18:28:08.899Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:08.899Z] [CARD] 2 reçoit [ACTION: SecondChance] (hit)
+[2026-01-28T18:28:08.899Z] [SECOND CHANCE] 2 conserve une SecondChance.
+[2026-01-28T18:28:08.899Z] [CARD] 2 reçoit 8 (secondChance)
+[2026-01-28T18:28:08.900Z] 2 | nombres=[6, 8] | x2=false | +bonus=6 | secondChance=true | active=true
+[2026-01-28T18:28:08.900Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:08.900Z] [CARD] 2 reçoit 12 (hit)
+[2026-01-28T18:28:08.900Z] 2 | nombres=[6, 8, 12] | x2=false | +bonus=6 | secondChance=true | active=true
+[2026-01-28T18:28:08.901Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:08.901Z] [CARD] 2 reçoit 10 (hit)
+[2026-01-28T18:28:08.901Z] 2 | nombres=[6, 8, 12, 10] | x2=false | +bonus=6 | secondChance=true | active=true
+[2026-01-28T18:28:08.901Z] [AUTO] 2 choisit S
+[2026-01-28T18:28:08.902Z] [STAY] 2 reste.
+[2026-01-28T18:28:08.902Z] 
+[SCORE] Fin du tour.
+[2026-01-28T18:28:08.902Z] 1 → +0 | total=75
+[2026-01-28T18:28:08.902Z] 2 → +42 | total=119
+[2026-01-28T18:28:08.903Z] 
+========== TOUR 10 ==========
+[2026-01-28T18:28:08.903Z] [ROUND] Distribution initiale.
+[2026-01-28T18:28:08.903Z] [CARD] 1 reçoit 12 (initial)
+[2026-01-28T18:28:08.903Z] [CARD] 2 reçoit 9 (initial)
+[2026-01-28T18:28:08.904Z] 1 | nombres=[12] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:08.904Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:08.904Z] [CARD] 1 reçoit 9 (hit)
+[2026-01-28T18:28:08.905Z] 2 | nombres=[9] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:08.905Z] [AUTO] 2 choisit H
+[2026-01-28T18:28:08.905Z] [CARD] 2 reçoit 9 (hit)
+[2026-01-28T18:28:08.905Z] [ELIM] 2 est éliminé du tour (doublon).
+[2026-01-28T18:28:08.905Z] 1 | nombres=[12, 9] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:08.906Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:08.906Z] [CARD] 1 reçoit 8 (hit)
+[2026-01-28T18:28:08.906Z] 1 | nombres=[12, 9, 8] | x2=false | +bonus=0 | secondChance=false | active=true
+[2026-01-28T18:28:08.906Z] [AUTO] 1 choisit H
+[2026-01-28T18:28:08.907Z] [CARD] 1 reçoit 12 (hit)
+[2026-01-28T18:28:08.907Z] [ELIM] 1 est éliminé du tour (doublon).
+[2026-01-28T18:28:08.907Z] 
+[SCORE] Fin du tour.
+[2026-01-28T18:28:08.907Z] 1 → +0 | total=75
+[2026-01-28T18:28:08.908Z] 2 → +0 | total=119
+[2026-01-28T18:28:08.908Z] 
+========== TOUR 11 ==========
+[2026-01-28T18:28:08.908Z] [ROUND] Distribution initiale.
+[2026-01-28T18:28:08.908Z] [CARD] 1 reçoit [MOD: +2] (initial)
+[2026-01-28T18:28:08.909Z] [CARD] 2 reçoit [ACTION: FlipThree] (initial)
+[2026-01-28T18:28:08.909Z] Choisis un joueur cible :
+[2026-01-28T18:28:08.909Z]   1) 1
+[2026-01-28T18:28:08.910Z]   2) 2
+[2026-01-28T19:02:16.132Z] ------------------------------------------------------------
+[2026-01-28T19:02:16.133Z] [GAME] Démarrage Flip 7 (CLI).
+[2026-01-28T19:02:16.134Z] [GAME] Joueurs: 1, 2, 3
+[2026-01-28T19:02:16.134Z] [GAME] Mode interactif : tape 'a' pour demander un conseil IA à ton tour.
+[2026-01-28T19:02:16.135Z] ------------------------------------------------------------
+[2026-01-28T19:02:16.135Z] [ROUND 1] Début du tour. Donneur = 1
+[2026-01-28T19:02:16.135Z] [ROUND] Distribution initiale : 1 carte par joueur.
+[2026-01-28T19:02:16.136Z] [CARD] 1 reçoit [ACTION: SecondChance] (initialDeal)
+[2026-01-28T19:02:16.136Z] [SECOND CHANCE] 1 garde une SecondChance.
+[2026-01-28T19:02:16.137Z] [CARD] 1 reçoit 4 (secondChance-extraDraw)
+[2026-01-28T19:02:16.137Z] [CARD] 2 reçoit [ACTION: Freeze] (initialDeal)
+[2026-01-28T19:02:16.137Z] Choisis un joueur cible :
+[2026-01-28T19:02:16.138Z]   1) 1
+[2026-01-28T19:02:16.138Z]   2) 2
+[2026-01-28T19:02:16.138Z]   3) 3
+[2026-01-28T19:02:22.689Z] [FREEZE] 2 est gelé : éliminé du tour, score tour = 0.
+[2026-01-28T19:02:22.689Z] [CARD] 3 reçoit 12 (initialDeal)
+[2026-01-28T19:02:22.690Z] 
+[2026-01-28T19:02:22.690Z] [TURN] 1 joue. État: 1 | nombres=[4] | x2=false | +bonus=0 | secondChance=true
+[2026-01-28T19:02:34.160Z] [CARD] 1 reçoit 9 (hit)
+[2026-01-28T19:02:34.161Z] 
+[2026-01-28T19:02:34.161Z] [TURN] 3 joue. État: 3 | nombres=[12] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T19:02:35.148Z] [CARD] 3 reçoit 10 (hit)
+[2026-01-28T19:02:35.148Z] 
+[2026-01-28T19:02:35.148Z] [TURN] 1 joue. État: 1 | nombres=[4, 9] | x2=false | +bonus=0 | secondChance=true
+[2026-01-28T19:02:37.028Z] [CARD] 1 reçoit 7 (hit)
+[2026-01-28T19:02:37.029Z] 
+[2026-01-28T19:02:37.029Z] [TURN] 3 joue. État: 3 | nombres=[12, 10] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T19:02:41.504Z] [IA] Conseil: STAY | Risque / espérance : rester est mieux ou égal.
+     P(bust)≈0.23 | stay=22 | E(hit)≈21.98 | deck=87
+     Note: Modèle 1-coup: ignore les effets stratégiques des actions (Freeze/FlipThree).
+[2026-01-28T19:04:38.677Z] [STAY] 3 reste. Il ne piochera plus ce tour.
+[2026-01-28T19:04:38.677Z] 
+[2026-01-28T19:04:38.678Z] [TURN] 1 joue. État: 1 | nombres=[4, 9, 7] | x2=false | +bonus=0 | secondChance=true
+[2026-01-28T19:04:42.404Z] [IA] Conseil: HIT | Espérance de score > score actuel.
+     P(bust)≈0.195 | stay=20 | E(hit)≈26.11 | deck=87
+     Note: Modèle 1-coup: ignore les effets stratégiques des actions (Freeze/FlipThree).
+[2026-01-28T19:04:50.995Z] [CARD] 1 reçoit [MOD: +6] (hit)
+[2026-01-28T19:04:50.996Z] 
+[2026-01-28T19:04:50.996Z] [TURN] 1 joue. État: 1 | nombres=[4, 9, 7] | x2=false | +bonus=6 | secondChance=true
+[2026-01-28T19:04:53.546Z] [IA] Conseil: HIT | Espérance de score > score actuel.
+     P(bust)≈0.198 | stay=26 | E(hit)≈32.12 | deck=86
+     Note: Modèle 1-coup: ignore les effets stratégiques des actions (Freeze/FlipThree).
+[2026-01-28T19:05:07.661Z] [CARD] 1 reçoit 12 (hit)
+[2026-01-28T19:05:07.662Z] 
+[2026-01-28T19:05:07.662Z] [TURN] 1 joue. État: 1 | nombres=[4, 9, 7, 12] | x2=false | +bonus=6 | secondChance=true
+[2026-01-28T19:05:11.560Z] [IA] Conseil: HIT | Espérance de score > score actuel.
+     P(bust)≈0.318 | stay=38 | E(hit)≈42.78 | deck=85
+     Note: Modèle 1-coup: ignore les effets stratégiques des actions (Freeze/FlipThree).
+[2026-01-28T19:05:26.280Z] [CARD] 1 reçoit 10 (hit)
+[2026-01-28T19:05:26.280Z] 
+[2026-01-28T19:05:26.280Z] [TURN] 1 joue. État: 1 | nombres=[4, 9, 7, 12, 10] | x2=false | +bonus=6 | secondChance=true
+[2026-01-28T19:05:31.577Z] [IA] Conseil: HIT | Espérance de score > score actuel.
+     P(bust)≈0.417 | stay=48 | E(hit)≈51.88 | deck=84
+     Note: Modèle 1-coup: ignore les effets stratégiques des actions (Freeze/FlipThree).
+[2026-01-28T19:05:34.673Z] [CARD] 1 reçoit 5 (hit)
+[2026-01-28T19:05:34.673Z] 
+[2026-01-28T19:05:34.674Z] [TURN] 1 joue. État: 1 | nombres=[4, 9, 7, 12, 10, 5] | x2=false | +bonus=6 | secondChance=true
+[2026-01-28T19:05:42.838Z] [CARD] 1 reçoit 12 (hit)
+[2026-01-28T19:05:47.299Z] [SECOND CHANCE] 1 annule le doublon. Carte défaussée.
+[2026-01-28T19:05:47.299Z] 
+[2026-01-28T19:05:47.300Z] [TURN] 1 joue. État: 1 | nombres=[4, 9, 7, 12, 10, 5] | x2=false | +bonus=6 | secondChance=false
+[2026-01-28T19:06:02.332Z] [IA] Conseil: STAY | Risque / espérance : rester est mieux ou égal.
+     P(bust)≈0.463 | stay=53 | E(hit)≈38.02 | deck=82
+     Note: Modèle 1-coup: ignore les effets stratégiques des actions (Freeze/FlipThree).
+[2026-01-28T19:06:22.456Z] ------------------------------------------------------------
+[2026-01-28T19:06:22.457Z] [GAME] Démarrage Flip 7 (CLI).
+[2026-01-28T19:06:22.458Z] [GAME] Joueurs: 1, 2
+[2026-01-28T19:06:22.458Z] [GAME] Mode interactif : tape 'a' pour demander un conseil IA à ton tour.
+[2026-01-28T19:06:22.458Z] ------------------------------------------------------------
+[2026-01-28T19:06:22.459Z] [ROUND 1] Début du tour. Donneur = 1
+[2026-01-28T19:06:22.459Z] [ROUND] Distribution initiale : 1 carte par joueur.
+[2026-01-28T19:06:22.459Z] [CARD] 1 reçoit 8 (initialDeal)
+[2026-01-28T19:06:22.460Z] [CARD] 2 reçoit 7 (initialDeal)
+[2026-01-28T19:06:22.460Z] 
+[2026-01-28T19:06:22.460Z] [TURN] 1 joue. État: 1 | nombres=[8] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T19:06:23.393Z] [IA] Conseil: HIT | Espérance de score > score actuel.
+     P(bust)≈0.076 | stay=8 | E(hit)≈14.1 | deck=92
+     Note: undefined
+[2026-01-28T19:20:36.884Z] ------------------------------------------------------------
+[2026-01-28T19:20:36.885Z] [GAME] Démarrage Flip 7 (CLI).
+[2026-01-28T19:20:36.885Z] [GAME] Joueurs: 1, 2, 3
+[2026-01-28T19:20:36.886Z] [GAME] Mode interactif : tape 'a' pour demander un conseil IA à ton tour.
+[2026-01-28T19:20:36.886Z] ------------------------------------------------------------
+[2026-01-28T19:20:36.886Z] [ROUND 1] Début du tour. Donneur = 1
+[2026-01-28T19:20:36.887Z] [ROUND] Distribution initiale : 1 carte par joueur.
+[2026-01-28T19:20:36.887Z] [CARD] 1 reçoit 8 (initialDeal)
+[2026-01-28T19:20:36.888Z] [CARD] 2 reçoit 8 (initialDeal)
+[2026-01-28T19:20:36.888Z] [CARD] 3 reçoit 11 (initialDeal)
+[2026-01-28T19:20:36.888Z] 
+[2026-01-28T19:20:36.888Z] [TURN] 1 joue. État: 1 | nombres=[8] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T19:20:38.848Z] [CARD] 1 reçoit 10 (hit)
+[2026-01-28T19:20:38.848Z] 
+[2026-01-28T19:20:38.848Z] [TURN] 2 joue. État: 2 | nombres=[8] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T19:20:40.691Z] [IA] Conseil: HIT | Espérance de score > score actuel.
+    P(bust)≈0.067 | stay=8 | E(hit)≈14.17 | deck=90
+
+[2026-01-28T19:20:48.698Z] [CARD] 2 reçoit [ACTION: SecondChance] (hit)
+[2026-01-28T19:20:48.699Z] [SECOND CHANCE] 2 garde une SecondChance.
+[2026-01-28T19:20:48.699Z] [CARD] 2 reçoit 3 (secondChance-extraDraw)
+[2026-01-28T19:20:48.699Z] 
+[2026-01-28T19:20:48.699Z] [TURN] 3 joue. État: 3 | nombres=[11] | x2=false | +bonus=0 | secondChance=false
