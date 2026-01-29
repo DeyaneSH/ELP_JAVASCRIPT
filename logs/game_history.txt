@@ -454,3 +454,74 @@
 [2026-01-28T19:20:48.699Z] [CARD] 2 reçoit 3 (secondChance-extraDraw)
 [2026-01-28T19:20:48.699Z] 
 [2026-01-28T19:20:48.699Z] [TURN] 3 joue. État: 3 | nombres=[11] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T20:08:52.089Z] ------------------------------------------------------------
+[2026-01-28T20:08:52.091Z] [GAME] Démarrage Flip 7 (CLI).
+[2026-01-28T20:08:52.091Z] [GAME] Joueurs: Alice, Bob
+[2026-01-28T20:08:52.091Z] [GAME] Mode interactif : tape 'a' pour demander un conseil IA à ton tour.
+[2026-01-28T20:08:52.092Z] ------------------------------------------------------------
+[2026-01-28T20:08:52.092Z] [ROUND 1] Début du tour. Donneur = Alice
+[2026-01-28T20:08:52.093Z] [ROUND] Distribution initiale : 1 carte par joueur.
+[2026-01-28T20:08:52.093Z] [CARD] Alice reçoit 8 (initialDeal)
+[2026-01-28T20:08:52.093Z] [CARD] Bob reçoit 10 (initialDeal)
+[2026-01-28T20:08:52.094Z] 
+[2026-01-28T20:08:52.094Z] [TURN] Alice joue. État: Alice | nombres=[8] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T20:09:10.434Z] [CARD] Alice reçoit 2 (hit)
+[2026-01-28T20:09:10.435Z] 
+[2026-01-28T20:09:10.435Z] [TURN] Bob joue. État: Bob | nombres=[10] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T20:09:21.057Z] [CARD] Bob reçoit [MOD: +6] (hit)
+[2026-01-28T20:09:21.058Z] 
+[2026-01-28T20:09:21.058Z] [TURN] Alice joue. État: Alice | nombres=[8, 2] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T20:09:22.202Z] [CARD] Alice reçoit 10 (hit)
+[2026-01-28T20:09:22.203Z] 
+[2026-01-28T20:09:22.203Z] [TURN] Bob joue. État: Bob | nombres=[10] | x2=false | +bonus=6 | secondChance=false
+[2026-01-28T20:09:22.710Z] [CARD] Bob reçoit 7 (hit)
+[2026-01-28T20:09:22.710Z] 
+[2026-01-28T20:09:22.710Z] [TURN] Alice joue. État: Alice | nombres=[8, 2, 10] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T20:09:23.177Z] [CARD] Alice reçoit 10 (hit)
+[2026-01-28T20:09:23.177Z] [ELIM] Alice est éliminé du tour (doublon 10).
+[2026-01-28T20:09:23.178Z] 
+[2026-01-28T20:09:23.178Z] [TURN] Bob joue. État: Bob | nombres=[10, 7] | x2=false | +bonus=6 | secondChance=false
+[2026-01-28T20:09:23.625Z] [CARD] Bob reçoit 11 (hit)
+[2026-01-28T20:09:23.625Z] 
+[2026-01-28T20:09:23.625Z] [TURN] Bob joue. État: Bob | nombres=[10, 7, 11] | x2=false | +bonus=6 | secondChance=false
+[2026-01-28T20:09:24.602Z] [STAY] Bob reste. Il ne piochera plus ce tour.
+[2026-01-28T20:09:24.602Z] 
+[2026-01-28T20:09:24.603Z] [ROUND 1] Scoring...
+[2026-01-28T20:09:24.603Z] [SCORE] Alice : scoreTour=0 | total=0 | eliminated=true | nombres=[8, 2, 10] | x2=false | +bonus=0
+[2026-01-28T20:09:24.603Z] [SCORE] Bob : scoreTour=34 | total=34 | eliminated=false | nombres=[10, 7, 11] | x2=false | +bonus=6
+[2026-01-28T20:09:24.604Z] ------------------------------------------------------------
+[2026-01-28T20:09:24.604Z] [ROUND 2] Début du tour. Donneur = Bob
+[2026-01-28T20:09:24.604Z] [ROUND] Distribution initiale : 1 carte par joueur.
+[2026-01-28T20:09:24.604Z] [CARD] Alice reçoit 12 (initialDeal)
+[2026-01-28T20:09:24.605Z] [CARD] Bob reçoit 6 (initialDeal)
+[2026-01-28T20:09:24.605Z] 
+[2026-01-28T20:09:24.605Z] [TURN] Alice joue. État: Alice | nombres=[12] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T20:09:25.679Z] [CARD] Alice reçoit 7 (hit)
+[2026-01-28T20:09:25.680Z] 
+[2026-01-28T20:09:25.680Z] [TURN] Bob joue. État: Bob | nombres=[6] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T20:09:26.458Z] [CARD] Bob reçoit 7 (hit)
+[2026-01-28T20:09:26.459Z] 
+[2026-01-28T20:09:26.459Z] [TURN] Alice joue. État: Alice | nombres=[12, 7] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T20:09:26.947Z] [CARD] Alice reçoit 4 (hit)
+[2026-01-28T20:09:26.948Z] 
+[2026-01-28T20:09:26.948Z] [TURN] Bob joue. État: Bob | nombres=[6, 7] | x2=false | +bonus=0 | secondChance=false
+[2026-01-28T20:09:27.302Z] [CARD] Bob reçoit 11 (hit)
+[2026-01-28T20:09:27.302Z] 
+[2026-01-28T20:09:27.302Z] [TURN] Alice joue. État: Alice | nombres=[12, 7, 4] | x2=false | +bonus=0 | secondChance=false
+[2026-01-29T00:03:05.628Z] ------------------------------------------------------------
+[2026-01-29T00:03:05.630Z] [GAME] Démarrage Flip 7 (CLI).
+[2026-01-29T00:03:05.630Z] [GAME] Joueurs: Alice, Bob
+[2026-01-29T00:03:05.631Z] [GAME] Mode interactif : tape 'a' pour demander un conseil IA à ton tour.
+[2026-01-29T00:03:05.631Z] ------------------------------------------------------------
+[2026-01-29T00:03:05.631Z] [ROUND 1] Début du tour. Donneur = Alice
+[2026-01-29T00:03:05.632Z] [ROUND] Distribution initiale : 1 carte par joueur.
+[2026-01-29T00:03:05.633Z] [CARD] Alice reçoit 0 (initialDeal)
+[2026-01-29T00:03:05.633Z] [CARD] Bob reçoit 11 (initialDeal)
+[2026-01-29T00:03:05.633Z] 
+[2026-01-29T00:03:05.634Z] [TURN] Alice joue. État: Alice | nombres=[0] | x2=false | +bonus=0 | secondChance=false
+[2026-01-29T00:04:06.882Z] [CARD] Alice reçoit 9 (hit)
+[2026-01-29T00:04:06.882Z] 
+[2026-01-29T00:04:06.883Z] [TURN] Bob joue. État: Bob | nombres=[11] | x2=false | +bonus=0 | secondChance=false
+[2026-01-29T00:04:08.759Z] [CARD] Bob reçoit 7 (hit)
+[2026-01-29T00:04:08.760Z] 
+[2026-01-29T00:04:08.760Z] [TURN] Alice joue. État: Alice | nombres=[0, 9] | x2=false | +bonus=0 | secondChance=false

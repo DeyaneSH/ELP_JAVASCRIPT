@@ -1,13 +1,7 @@
 // src/Game.js
 // ============================================================================
-// GAME.JS – CŒUR DU JEU FLIP 7 (CLI Node.js)
-//
-// Ce fichier contient toute la logique du jeu :
-// - gestion des tours
-// - pioche et défausse
-// - règles Flip 7 (doublons, Freeze, FlipThree, SecondChance)
-// - scoring
-// - mode interactif OU automatique
+// Flip 7 - Game Engine (CLI Node.js)
+// ============================================================================
 //
 // Objectifs de ce fichier :
 // - Implémenter la logique principale du jeu Flip 7 (tours, actions, scoring)
@@ -299,6 +293,7 @@ class Game {
       scoreStay,
       expectedHitScore: Number(expectedHitScore.toFixed(2)),
       numbersAlready: p.numbers.length,
+      note: "Modèle 1-coup: ignore les effets stratégiques des actions (Freeze/FlipThree).",
     };
 
     const reason =
@@ -503,8 +498,8 @@ class Game {
               const adv = this.computeAdviceForPlayer(p);
               this.logger.log(
                 `[IA] Conseil: ${adv.suggestion} | ${adv.reason}\n` +
-                  `    P(bust)≈${adv.details.pBustRaw} | stay=${adv.details.scoreStay} | E(hit)≈${adv.details.expectedHitScore} | deck=${adv.details.remainingCards}\n` 
-                  
+                  `     P(bust)≈${adv.details.pBustRaw} | stay=${adv.details.scoreStay} | E(hit)≈${adv.details.expectedHitScore} | deck=${adv.details.remainingCards}\n` +
+                  `     Note: ${adv.details.note}`
               );
               // Après l'avis, on redemande une action
               continue;
