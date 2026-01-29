@@ -7,114 +7,77 @@
 // - Tous les logs sont broadcast à tous (pour voir les cartes des autres)
 // ============================================================================
 
+// net/server.js
 const net = require("net");
 const { sendJSON, makeLineParser } = require("./protocol");
 const Game = require("../src/Game");
 
 const HOST = "0.0.0.0";
 const PORT = 5050;
-
-// 🔧 Mets le nombre de joueurs attendu ici
 const EXPECTED_PLAYERS = 2;
 
-// Liste des clients connectés
-// Chaque client : { socket, name, pendingResolve }
-const clients = [];
+const clients = []; // { socket, name, pendingResolve }
 
-// ---------------------------------------------------------------------------
-// Outils d'envoi
-// ---------------------------------------------------------------------------
 function broadcast(text) {
-  for (const c of clients) {
-    sendJSON(c.socket, { type: "print", text });
-  }
+  for (const c of clients) sendJSON(c.socket, { type: "print", text });
 }
 
 function getClientByName(name) {
   return clients.find((c) => c.name === name);
 }
 
-// askClient : envoie un prompt à 1 joueur, et attend sa réponse (Promise)
 function askClient(name, question) {
   const c = getClientByName(name);
-  if (!c) return Promise.resolve("s"); // sécurité : si absent -> stay
+  if (!c) return Promise.resolve("s");
 
   return new Promise((resolve) => {
-    // Stocke le resolve => sera appelé à la réception du prochain "input"
     c.pendingResolve = resolve;
-
-    // Envoie la question au BON joueur
     sendJSON(c.socket, { type: "prompt", text: question });
   });
 }
 
-// ---------------------------------------------------------------------------
-// Serveur TCP
-// ---------------------------------------------------------------------------
 const server = net.createServer((socket) => {
   socket.setNoDelay(true);
 
-  const client = {
-    socket,
-    name: null,
-    pendingResolve: null,
-  };
+  const client = { socket, name: null, pendingResolve: null };
   clients.push(client);
 
-  sendJSON(socket, {
-    type: "print",
-    text:
-      "✅ Connecté au serveur Flip7.\n" +
-      "Attente d'un message join automatique depuis le client...\n\n",
-  });
+  sendJSON(socket, { type: "print", text: "✅ Connecté au serveur Flip7.\n" });
 
-  // Parser JSON lines (un message JSON par ligne)
-  const onData = makeLineParser((msg) => {
-    // JOIN : {type:"join", name:"Alice"}
-    if (msg.type === "join" && typeof msg.name === "string") {
-      const wantedName = msg.name.trim();
-
-      // Empêche doublons de noms
-      if (clients.some((c) => c.name === wantedName)) {
-        sendJSON(socket, { type: "print", text: `❌ Nom déjà pris: ${wantedName}\n` });
-        socket.end();
+  socket.on(
+    "data",
+    makeLineParser((msg) => {
+      if (msg.type === "join" && typeof msg.name === "string") {
+        const n = msg.name.trim();
+        if (clients.some((c) => c.name === n)) {
+          sendJSON(socket, { type: "print", text: `❌ Nom déjà pris: ${n}\n` });
+          socket.end();
+          return;
+        }
+        client.name = n;
+        broadcast(`👤 ${n} a rejoint (${clients.filter((c) => c.name).length}/${EXPECTED_PLAYERS})\n`);
+        tryStartGame();
         return;
       }
 
-      client.name = wantedName;
-      broadcast(`👤 ${client.name} a rejoint (${clients.filter((c) => c.name).length}/${EXPECTED_PLAYERS})\n`);
-
-      // Dès qu'on a assez de joueurs, on démarre
-      tryStartGame();
-      return;
-    }
-
-    // INPUT : {type:"input", value:"h"}
-    if (msg.type === "input" && typeof msg.value === "string") {
-      const v = msg.value.trim().toLowerCase();
-
-      // Réponse attendue ?
-      if (client.pendingResolve) {
-        const r = client.pendingResolve;
-        client.pendingResolve = null;
-        r(v);
+      if (msg.type === "input" && typeof msg.value === "string") {
+        if (client.pendingResolve) {
+          const r = client.pendingResolve;
+          client.pendingResolve = null;
+          r(msg.value.trim().toLowerCase());
+        }
+        return;
       }
-      return;
-    }
-  });
-
-  socket.on("data", onData);
+    })
+  );
 
   socket.on("close", () => {
-    const idx = clients.indexOf(client);
-    if (idx >= 0) clients.splice(idx, 1);
-
+    const i = clients.indexOf(client);
+    if (i >= 0) clients.splice(i, 1);
     broadcast("❌ Un joueur s'est déconnecté.\n");
   });
 
-  socket.on("error", () => {
-    // ignore
-  });
+  socket.on("error", () => {});
 });
 
 server.listen(PORT, HOST, () => {
@@ -122,9 +85,6 @@ server.listen(PORT, HOST, () => {
   console.log(`➡️ Attente de ${EXPECTED_PLAYERS} joueurs...`);
 });
 
-// ---------------------------------------------------------------------------
-// Démarrage de partie
-// ---------------------------------------------------------------------------
 let started = false;
 
 async function tryStartGame() {
@@ -134,23 +94,23 @@ async function tryStartGame() {
   if (ready.length < EXPECTED_PLAYERS) return;
 
   started = true;
-
-  // Ordre des joueurs = ordre de connexion
   const names = ready.slice(0, EXPECTED_PLAYERS).map((c) => c.name);
 
   broadcast("\n=== Tous les joueurs sont connectés. Démarrage ! ===\n\n");
 
-  // IO injectée dans Game :
-  // - log => broadcast vers tous
-  // - ask => prompt uniquement au joueur concerné
   const io = {
     log: (text) => broadcast(text + "\n"),
     ask: (playerName, question) => askClient(playerName, question),
     close: () => broadcast("\n=== Partie terminée ===\n"),
   };
 
-  // Lance une partie "interactive" : les humains répondent via leurs clients
+  // ✅ DEBUG IMPORTANT : on affiche si io est bien injecté
+  console.log("DEBUG server: launching Game with io =", !!io, "ask=", typeof io.ask, "log=", typeof io.log);
+
   const game = new Game(names, { mode: "interactive", io });
+
+  // ✅ DEBUG IMPORTANT : si ton Game n’a pas this.io, ça va se voir ici
+  console.log("DEBUG server: Game created. game.io exists =", !!game.io);
 
   await game.start();
 

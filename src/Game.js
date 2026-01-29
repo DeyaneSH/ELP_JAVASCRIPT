@@ -31,46 +31,88 @@ const Logger = require("./Logger");
 const readline = require("readline");
 
 class Game {
+  // ==========================================================================
+  // CONSTRUCTEUR
+  // ==========================================================================
   constructor(playerNames, options = {}) {
+    // --- Joueurs ---
     this.players = playerNames.map((n) => new Player(n));
+
+    // --- Logger (fichier + console en local) ---
     this.logger = new Logger();
 
-    // Options de jeu
+    // --- Options de jeu ---
     this.mode = options.mode || "interactive"; // "interactive" | "auto"
     this.autoTarget = typeof options.autoTarget === "number" ? options.autoTarget : 4;
 
-    // Deck + défausse
+    // --- Deck + défausse ---
     this.deck = new Deck();
     this.discardPile = [];
 
-    // Donneur
+    // --- Donneur ---
     this.dealerIndex = 0;
 
-    // CLI
-    this.rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
+    // ------------------------------------------------------------------------
+    // 🔌 IO TCP (optionnelle)
+    // ------------------------------------------------------------------------
+    // Si options.io est fourni (serveur TCP), on utilise :
+    //   this.io.log(...) et this.io.ask(...)
+    // et on NE crée PAS de readline local.
+    this.io = options.io || null;
+
+    if (!this.io) {
+      // Mode local CLI : on lit au clavier
+      this.rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+      });
+    } else {
+      // Mode TCP : pas de clavier serveur !
+      this.rl = null;
+    }
   }
 
-  // --------------------------------------------------------------------------
-  // Prompt async
-  // --------------------------------------------------------------------------
-  ask(question) {
+  // ==========================================================================
+  // LOG CENTRALISÉ
+  // ==========================================================================
+  // Objectif : un seul point d'entrée pour afficher du texte
+  // - En TCP : broadcast via io.log
+  // - En local : logger classique
+  log(text) {
+    if (this.io && typeof this.io.log === "function") {
+      this.io.log(text);
+    } else {
+      this.logger.log(text);
+    }
+  }
+
+  separator() {
+    this.log("------------------------------------------------------------");
+  }
+
+  // ==========================================================================
+  // ASK CENTRALISÉ
+  // ==========================================================================
+  // - En TCP : ask(playerName, question) -> le serveur envoie au bon client
+  // - En local : readline
+  ask(question, playerName = null) {
+    if (this.io && typeof this.io.ask === "function") {
+      return this.io.ask(playerName, question);
+    }
     return new Promise((resolve) => this.rl.question(question, resolve));
   }
 
-  // --------------------------------------------------------------------------
+  // ==========================================================================
   // Pioche / défausse
-  // --------------------------------------------------------------------------
+  // ==========================================================================
   drawCard() {
     let card = this.deck.draw();
     if (card) return card;
 
-    // Rebuild deck from discard pile if empty
+    // Si la pioche est vide, on remélange la défausse
     if (this.discardPile.length === 0) return null;
 
-    this.logger.log("[DECK] Pioche vide → mélange de la défausse.");
+    this.log("[DECK] Pioche vide → mélange de la défausse.");
     this.deck.cards = this.discardPile;
     this.discardPile = [];
     this.deck.shuffle();
@@ -82,135 +124,74 @@ class Game {
     this.discardPile.push(card);
   }
 
-  // --------------------------------------------------------------------------
+  // ==========================================================================
   // Affichage état joueur (nettoyé)
-  // - Tu voulais enlever "active=true" : on ne l'affiche plus.
-  // --------------------------------------------------------------------------
+  // ==========================================================================
+  // On n'affiche PAS active=true (inutile pour l'utilisateur)
   roundStateString(p) {
     return `${p.name} | nombres=[${p.numbers.join(", ")}] | x2=${p.hasX2} | +bonus=${p.plusBonus} | secondChance=${p.secondChance}`;
   }
 
-  // --------------------------------------------------------------------------
+  // ==========================================================================
   // Choix d'une cible (pour actions)
-  // --------------------------------------------------------------------------
-  async chooseTargetPlayer(activeOnly = true) {
+  // ==========================================================================
+  // actorName = joueur qui doit répondre au prompt (important en TCP)
+  async chooseTargetPlayer(actorName, activeOnly = true) {
     const candidates = this.players.filter((p) => (activeOnly ? p.active : true));
     if (candidates.length === 0) return null;
     if (candidates.length === 1) return candidates[0];
 
-    this.logger.log("Choisis un joueur cible :");
-    candidates.forEach((p, idx) => this.logger.log(`  ${idx + 1}) ${p.name}`));
+    this.log(`[CHOICE] ${actorName} doit choisir une cible :`);
+    candidates.forEach((p, idx) => this.log(`  ${idx + 1}) ${p.name}`));
 
     while (true) {
-      const ans = await this.ask("> Numéro du joueur : ");
+      const ans = await this.ask("> Numéro du joueur : ", actorName);
       const k = parseInt(ans, 10);
       if (!Number.isNaN(k) && k >= 1 && k <= candidates.length) return candidates[k - 1];
-      console.log("Choix invalide, réessaie.");
+      this.log("Choix invalide, réessaie.");
     }
   }
 
   // ==========================================================================
-  // ====================== IA PROBABILISTE (CONSEIL) =========================
-  // ==========================================================================
-  //
-  // But : estimer si HIT ou STAY donne une meilleure espérance de score (sur 1 tirage).
-  //
-  // On calcule :
-  // - scoreStay : score actuel du joueur s'il STAY maintenant
-  // - expectedHitScore : E[score] si on tire UNE carte maintenant, puis on s'arrête
-  //
-  // Simulations par type de carte :
-  // - number :
-  //    * si nouveau nombre => score augmente (+valeur)
-  //    * si doublon => score devient 0 (bust) SAUF si secondChance :
-  //         - si secondChance=true, on suppose qu'il l'utilise => score inchangé, secondChance consommée
-  // - modifier :
-  //    * x2 => double la somme des nombres
-  //    * +2/+4... => ajoute au bonus
-  // - action :
-  //    * score inchangé (on ignore la valeur stratégique)
-  //
-  // Bonus Flip7 :
-  // - si le joueur a déjà 6 nombres distincts et tire un nouveau nombre distinct => +15
-  //
-  // --------------------------------------------------------------------------
-  // Limites assumées (normal pour un projet) :
-  // - ignore les effets stratégiques des actions (Freeze/FlipThree)
-  // - ignore le fait qu'après un hit on peut continuer à jouer
-  // => c'est un "one-step lookahead" (un coup d'avance), simple et testable.
-  //
+  // IA PROBABILISTE (conseil)
   // ==========================================================================
   computeAdviceForPlayer(p) {
-    // Si joueur déjà éliminé ou plus actif, pas utile
     if (p.eliminated || !p.active) {
-      return {
-        suggestion: "STAY",
-        reason: "Joueur inactif/éliminé.",
-        details: null,
-      };
+      return { suggestion: "STAY", reason: "Joueur inactif/éliminé.", details: null };
     }
 
-    // Si plus de cartes dans le deck (très rare car on remélange la défausse)
     const remaining = this.deck.cards.length;
     if (remaining <= 0) {
-      return {
-        suggestion: "STAY",
-        reason: "Plus de cartes restantes dans la pioche.",
-        details: { remaining },
-      };
+      return { suggestion: "STAY", reason: "Plus de cartes restantes dans la pioche.", details: { remainingCards: 0 } };
     }
 
-    // Score actuel si on stay maintenant
     const scoreStay = p.computeRoundScore(false);
 
-    // Comptage des cartes restantes (dans la pioche uniquement)
-    // NB : le deck restant est this.deck.cards (la défausse n'est pas dans la pioche)
-    // On calcule le nombre de cartes par :
-    // - type=number : valeur 0..12
-    // - type=modifier : "x2" ou number 2/4/...
-    // - type=action : Freeze/FlipThree/SecondChance
     const counts = {
       total: remaining,
-      numberTotal: 0,
-      actionTotal: 0,
-      modifierTotal: 0,
-      numberByValue: new Map(), // value -> count
+      numberByValue: new Map(),
       modifierX2: 0,
-      modifierPlus: new Map(), // +v -> count
-      actionByName: new Map(), // name -> count
+      modifierPlus: new Map(),
+      actionTotal: 0,
     };
 
     for (const c of this.deck.cards) {
       if (c.type === "number") {
-        counts.numberTotal++;
         counts.numberByValue.set(c.value, (counts.numberByValue.get(c.value) || 0) + 1);
       } else if (c.type === "modifier") {
-        counts.modifierTotal++;
         if (c.value === "x2") counts.modifierX2++;
         else counts.modifierPlus.set(c.value, (counts.modifierPlus.get(c.value) || 0) + 1);
       } else if (c.type === "action") {
         counts.actionTotal++;
-        counts.actionByName.set(c.value, (counts.actionByName.get(c.value) || 0) + 1);
       }
     }
 
-    // Probabilité de bust (tirer un doublon de nombre) :
-    // bust si la carte est un NUMBER qui est déjà présent dans p.numbers.
+    // P(bust) brute = proba de tirer un nombre déjà présent
     let duplicateRemainingCount = 0;
-    for (const n of p.numbers) {
-      duplicateRemainingCount += counts.numberByValue.get(n) || 0;
-    }
+    for (const n of p.numbers) duplicateRemainingCount += counts.numberByValue.get(n) || 0;
     const pBustRaw = duplicateRemainingCount / counts.total;
 
-    // Pour l'espérance, on simule l'effet immédiat de chaque carte possible.
-    // expectedHitScore = (1/total) * somme(score_apres_carte)
-    let expectedHitScore = 0;
-
-    // Fonction locale : calcule score du joueur si on lui applique "virtuellement" une carte
-    // sans modifier l'état réel du joueur.
     const scoreAfterVirtualDraw = (cardType, cardValue) => {
-      // Copie virtuelle minimale de l'état du joueur
-      // (on ne copie que ce qui influence le score)
       const virtual = {
         numbers: [...p.numbers],
         hasX2: p.hasX2,
@@ -218,23 +199,17 @@ class Game {
         secondChance: p.secondChance,
       };
 
-      // Appliquer la carte
       if (cardType === "number") {
         const v = cardValue;
-
         const isDup = virtual.numbers.includes(v);
+
         if (isDup) {
-          // doublon
           if (virtual.secondChance) {
-            // on suppose qu'il utilise la seconde chance => pas de bust, mais consomme SC
-            virtual.secondChance = false;
-            // score inchangé
+            virtual.secondChance = false; // annule le doublon
           } else {
-            // bust => 0
-            return 0;
+            return 0; // bust
           }
         } else {
-          // nouveau nombre
           virtual.numbers.push(v);
         }
       }
@@ -244,89 +219,77 @@ class Game {
         else virtual.plusBonus += Number(cardValue);
       }
 
-      if (cardType === "action") {
-        // On ignore l'impact stratégique => score inchangé
-        // (On pourrait modéliser SecondChance comme utile, mais elle est gérée par applyCard réelle)
-      }
+      // action : score inchangé (modèle simple)
 
-      // Calcul du score de tour virtuel (sans flip7 par défaut)
       const sumNumbers = virtual.numbers.reduce((a, b) => a + b, 0);
       const doubled = virtual.hasX2 ? sumNumbers * 2 : sumNumbers;
       let score = doubled + virtual.plusBonus;
 
-      // Bonus Flip7 si on atteint 7 nombres distincts
       if (virtual.numbers.length >= 7) score += 15;
-
       return score;
     };
 
-    // Contribution des cartes NUMBER
+    // Espérance E(hit)
+    let expectedHitScore = 0;
+
     for (const [val, cnt] of counts.numberByValue.entries()) {
-      const score = scoreAfterVirtualDraw("number", val);
-      expectedHitScore += (cnt / counts.total) * score;
+      expectedHitScore += (cnt / counts.total) * scoreAfterVirtualDraw("number", val);
     }
 
-    // Contribution des MODIFIERS
     if (counts.modifierX2 > 0) {
-      const score = scoreAfterVirtualDraw("modifier", "x2");
-      expectedHitScore += (counts.modifierX2 / counts.total) * score;
-    }
-    for (const [plusVal, cnt] of counts.modifierPlus.entries()) {
-      const score = scoreAfterVirtualDraw("modifier", plusVal);
-      expectedHitScore += (cnt / counts.total) * score;
+      expectedHitScore += (counts.modifierX2 / counts.total) * scoreAfterVirtualDraw("modifier", "x2");
     }
 
-    // Contribution des ACTIONS (score inchangé = scoreStay virtuel)
-    // => on ajoute scoreStay pondéré par P(action)
-    // Note : Si tu veux raffiner, tu pourrais donner une petite valeur à SecondChance.
+    for (const [plusVal, cnt] of counts.modifierPlus.entries()) {
+      expectedHitScore += (cnt / counts.total) * scoreAfterVirtualDraw("modifier", plusVal);
+    }
+
     if (counts.actionTotal > 0) {
       expectedHitScore += (counts.actionTotal / counts.total) * scoreStay;
     }
 
-    // Comparaison HIT vs STAY
     const suggestion = expectedHitScore > scoreStay ? "HIT" : "STAY";
+    const reason = suggestion === "HIT"
+      ? "Espérance de score > score actuel."
+      : "Risque / espérance : rester est mieux ou égal.";
 
-    // Détails utiles pour expliquer au joueur
-    const details = {
-      remainingCards: counts.total,
-      pBustRaw: Number(pBustRaw.toFixed(3)),
-      scoreStay,
-      expectedHitScore: Number(expectedHitScore.toFixed(2)),
-      numbersAlready: p.numbers.length,
-      note: "Modèle 1-coup: ignore les effets stratégiques des actions (Freeze/FlipThree).",
+    return {
+      suggestion,
+      reason,
+      details: {
+        remainingCards: counts.total,
+        pBustRaw: Number(pBustRaw.toFixed(3)),
+        scoreStay,
+        expectedHitScore: Number(expectedHitScore.toFixed(2)),
+        numbersAlready: p.numbers.length,
+      },
     };
-
-    const reason =
-      suggestion === "HIT"
-        ? "Espérance de score > score actuel."
-        : "Risque / espérance : rester est mieux ou égal.";
-
-    return { suggestion, reason, details };
   }
 
   // ==========================================================================
-  // =========================== LOGIQUE DU JEU ===============================
+  // Application d'une carte (logique réelle)
+  // actorName = joueur qui doit répondre si prompt (TCP)
   // ==========================================================================
-  async applyCardToPlayer(player, card, context = "normal") {
-    this.logger.log(`[CARD] ${player.name} reçoit ${card.toString()} (${context})`);
+  async applyCardToPlayer(player, card, context = "normal", actorName = null) {
+    this.log(`[CARD] ${player.name} reçoit ${card.toString()} (${context})`);
 
     // -------------------- NUMBER --------------------
     if (card.type === "number") {
       if (player.hasNumber(card.value)) {
         // doublon
         if (player.secondChance) {
-          // En interactif, on laisse le joueur choisir ; en auto on suppose qu'il l'utilise
           let use = true;
           if (this.mode === "interactive") {
             const ans = await this.ask(
-              `${player.name} a un doublon (${card.value}). Utiliser SecondChance ? (y/n) `
+              `${player.name} a un doublon (${card.value}). Utiliser SecondChance ? (y/n) `,
+              actorName || player.name
             );
             use = ans.trim().toLowerCase().startsWith("y");
           }
 
           if (use) {
             player.secondChance = false;
-            this.logger.log(`[SECOND CHANCE] ${player.name} annule le doublon. Carte défaussée.`);
+            this.log(`[SECOND CHANCE] ${player.name} annule le doublon. Carte défaussée.`);
             this.discard(card);
             return { alive: true, flip7: false };
           }
@@ -335,17 +298,16 @@ class Game {
         // élimination
         player.active = false;
         player.eliminated = true;
-        this.logger.log(`[ELIM] ${player.name} est éliminé du tour (doublon ${card.value}).`);
+        this.log(`[ELIM] ${player.name} est éliminé du tour (doublon ${card.value}).`);
         this.discard(card);
         return { alive: false, flip7: false };
       }
 
-      // nouveau nombre
       player.addNumber(card.value);
       this.discard(card);
 
       const flip7 = player.countDistinctNumbers() >= 7;
-      if (flip7) this.logger.log(`[FLIP7] ${player.name} a 7 nombres distincts ! +15 et fin du tour.`);
+      if (flip7) this.log(`[FLIP7] ${player.name} a 7 nombres distincts ! +15 et fin du tour.`);
       return { alive: true, flip7 };
     }
 
@@ -362,7 +324,7 @@ class Game {
       this.discard(card);
 
       if (action === "Freeze") {
-        const target = await this.chooseTargetPlayer(true);
+        const target = await this.chooseTargetPlayer(actorName || player.name, true);
         if (!target) return { alive: true, flip7: false };
 
         target.active = false;
@@ -372,37 +334,37 @@ class Game {
         target.plusBonus = 0;
         target.secondChance = false;
 
-        this.logger.log(`[FREEZE] ${target.name} est gelé : éliminé du tour, score tour = 0.`);
+        this.log(`[FREEZE] ${target.name} est gelé : éliminé du tour, score tour = 0.`);
         return { alive: true, flip7: false };
       }
 
       if (action === "SecondChance") {
         if (!player.secondChance) {
           player.secondChance = true;
-          this.logger.log(`[SECOND CHANCE] ${player.name} garde une SecondChance.`);
+          this.log(`[SECOND CHANCE] ${player.name} garde une SecondChance.`);
 
-          // Pioche immédiate
           const extra = this.drawCard();
-          if (extra) return await this.applyCardToPlayer(player, extra, "secondChance-extraDraw");
+          if (extra) {
+            return await this.applyCardToPlayer(player, extra, "secondChance-extraDraw", actorName || player.name);
+          }
           return { alive: true, flip7: false };
         } else {
-          // Donne à un autre joueur actif sans SC, sinon défausse
           const other = this.players.find((p) => p.active && !p.secondChance);
           if (other) {
             other.secondChance = true;
-            this.logger.log(`[SECOND CHANCE] ${player.name} en avait déjà : donnée à ${other.name}.`);
+            this.log(`[SECOND CHANCE] ${player.name} en avait déjà : donnée à ${other.name}.`);
           } else {
-            this.logger.log(`[SECOND CHANCE] Personne ne peut la recevoir : défaussée.`);
+            this.log(`[SECOND CHANCE] Personne ne peut la recevoir : défaussée.`);
           }
           return { alive: true, flip7: false };
         }
       }
 
       if (action === "FlipThree") {
-        const target = await this.chooseTargetPlayer(true);
+        const target = await this.chooseTargetPlayer(actorName || player.name, true);
         if (!target) return { alive: true, flip7: false };
 
-        this.logger.log(`[FLIP THREE] ${target.name} doit retourner 3 cartes.`);
+        this.log(`[FLIP THREE] ${target.name} doit retourner 3 cartes.`);
         const pendingActions = [];
 
         for (let i = 1; i <= 3; i++) {
@@ -411,25 +373,24 @@ class Game {
           const c = this.drawCard();
           if (!c) break;
 
-          this.logger.log(`[FLIP THREE] Pioche ${i}/3 pour ${target.name}: ${c.toString()}`);
+          this.log(`[FLIP THREE] Pioche ${i}/3 pour ${target.name}: ${c.toString()}`);
 
           if (c.type === "action") {
             pendingActions.push(c);
             this.discard(c);
           } else {
-            const res = await this.applyCardToPlayer(target, c, "flipThree");
+            const res = await this.applyCardToPlayer(target, c, "flipThree", actorName || player.name);
             if (!res.alive) break;
             if (res.flip7) return { alive: true, flip7: true };
           }
         }
 
-        // Résolution actions en attente
         for (const actCard of pendingActions) {
-          this.logger.log(`[PENDING ACTION] Résolution de ${actCard.toString()} après FlipThree.`);
+          this.log(`[PENDING ACTION] Résolution de ${actCard.toString()} après FlipThree.`);
           const carrier = this.players.find((p) => p.active);
           if (!carrier) break;
 
-          const res = await this.applyCardToPlayer(carrier, actCard, "flipThree-pendingAction");
+          const res = await this.applyCardToPlayer(carrier, actCard, "flipThree-pendingAction", actorName || player.name);
           if (res.flip7) return { alive: true, flip7: true };
         }
 
@@ -442,35 +403,35 @@ class Game {
     return { alive: true, flip7: false };
   }
 
-  // --------------------------------------------------------------------------
+  // ==========================================================================
   // Distribution initiale
-  // --------------------------------------------------------------------------
+  // ==========================================================================
   async initialDeal() {
-    this.logger.log("[ROUND] Distribution initiale : 1 carte par joueur.");
+    this.log("[ROUND] Distribution initiale : 1 carte par joueur.");
 
     for (const p of this.players) {
       if (!p.active) continue;
+
       const card = this.drawCard();
       if (!card) continue;
 
-      // Si action pendant deal => résoudre immédiatement
-      const res = await this.applyCardToPlayer(p, card, "initialDeal");
+      const res = await this.applyCardToPlayer(p, card, "initialDeal", p.name);
       if (res.flip7) return true;
     }
+
     return false;
   }
 
-  // --------------------------------------------------------------------------
+  // ==========================================================================
   // Un tour complet
-  // --------------------------------------------------------------------------
+  // ==========================================================================
   async playRound(roundNumber) {
-    this.logger.separator();
-    this.logger.log(`[ROUND ${roundNumber}] Début du tour. Donneur = ${this.players[this.dealerIndex].name}`);
+    this.separator();
+    this.log(`[ROUND ${roundNumber}] Début du tour. Donneur = ${this.players[this.dealerIndex].name}`);
 
-    // reset round state
+    // Reset de tour
     this.players.forEach((p) => p.resetRoundState());
 
-    // initial deal
     let roundEndedByFlip7 = await this.initialDeal();
     let flip7Winner = null;
 
@@ -481,45 +442,44 @@ class Game {
       for (const p of activePlayers) {
         if (!p.active) continue;
 
-        this.logger.log("");
-        this.logger.log(`[TURN] ${p.name} joue. État: ${this.roundStateString(p)}`);
+        this.log("");
+        this.log(`[TURN] ${p.name} joue. État: ${this.roundStateString(p)}`);
 
         // ------------------ MODE INTERACTIF ------------------
         if (this.mode === "interactive") {
-          // On autorise :
-          // - h : hit (tirer)
-          // - s : stay (s'arrêter)
-          // - a : demander conseil à l'IA (ne joue pas à la place)
           while (true) {
-            const ans = await this.ask(`${p.name} : (h)it / (s)tay / (a)dvice ? `);
+            // IMPORTANT TCP : on passe p.name pour router le prompt au bon client
+            const ans = await this.ask(`${p.name} : (h)it / (s)tay / (a)dvice ? `, p.name);
             const choice = ans.trim().toLowerCase();
 
             if (choice.startsWith("a")) {
               const adv = this.computeAdviceForPlayer(p);
-              this.logger.log(
-                `[IA] Conseil: ${adv.suggestion} | ${adv.reason}\n` +
-                  `     P(bust)≈${adv.details.pBustRaw} | stay=${adv.details.scoreStay} | E(hit)≈${adv.details.expectedHitScore} | deck=${adv.details.remainingCards}\n` +
-                  `     Note: ${adv.details.note}`
-              );
-              // Après l'avis, on redemande une action
-              continue;
+              if (!adv.details) {
+                this.log(`[IA] Conseil: ${adv.suggestion} | ${adv.reason}`);
+              } else {
+                this.log(
+                  `[IA] Conseil: ${adv.suggestion} | ${adv.reason}\n` +
+                    `     P(bust)≈${adv.details.pBustRaw} | stay=${adv.details.scoreStay} | E(hit)≈${adv.details.expectedHitScore} | deck=${adv.details.remainingCards}`
+                );
+              }
+              continue; // redemande hit/stay
             }
 
             if (choice.startsWith("s")) {
               p.active = false;
-              this.logger.log(`[STAY] ${p.name} reste. Il ne piochera plus ce tour.`);
+              this.log(`[STAY] ${p.name} reste. Il ne piochera plus ce tour.`);
               break;
             }
 
-            // Par défaut : hit
+            // HIT par défaut
             const card = this.drawCard();
             if (!card) {
-              this.logger.log("[DECK] Plus de cartes disponibles. Fin du tour forcée.");
+              this.log("[DECK] Plus de cartes disponibles. Fin du tour forcée.");
               p.active = false;
               break;
             }
 
-            const res = await this.applyCardToPlayer(p, card, "hit");
+            const res = await this.applyCardToPlayer(p, card, "hit", p.name);
             if (res.flip7) {
               roundEndedByFlip7 = true;
               flip7Winner = p;
@@ -532,13 +492,12 @@ class Game {
         }
 
         // ------------------ MODE AUTO ------------------
-        // (utile pour tester rapidement sans entrer d'inputs)
         let choice = "h";
         if (p.countDistinctNumbers() >= this.autoTarget) {
           choice = "s";
-          this.logger.log(`[AUTO] ${p.name} atteint ${p.countDistinctNumbers()} nombres (>=${this.autoTarget}) => STAY`);
+          this.log(`[AUTO] ${p.name} atteint ${p.countDistinctNumbers()} nombres (>=${this.autoTarget}) => STAY`);
         } else {
-          this.logger.log(`[AUTO] ${p.name} a ${p.countDistinctNumbers()} nombres (<${this.autoTarget}) => HIT`);
+          this.log(`[AUTO] ${p.name} a ${p.countDistinctNumbers()} nombres (<${this.autoTarget}) => HIT`);
         }
 
         if (choice === "s") {
@@ -552,7 +511,7 @@ class Game {
           continue;
         }
 
-        const res = await this.applyCardToPlayer(p, card, "hit");
+        const res = await this.applyCardToPlayer(p, card, "hit", p.name);
         if (res.flip7) {
           roundEndedByFlip7 = true;
           flip7Winner = p;
@@ -561,64 +520,71 @@ class Game {
       }
     }
 
-    // scoring
-    this.logger.log("");
-    this.logger.log(`[ROUND ${roundNumber}] Scoring...`);
+    // ==========================================================================
+    // Scoring
+    // ==========================================================================
+    this.log("");
+    this.log(`[ROUND ${roundNumber}] Scoring...`);
 
     for (const p of this.players) {
       const flip7Bonus = flip7Winner && flip7Winner.name === p.name;
       const roundScore = p.computeRoundScore(flip7Bonus);
       p.totalScore += roundScore;
 
-      this.logger.log(
+      this.log(
         `[SCORE] ${p.name} : scoreTour=${roundScore} | total=${p.totalScore} | eliminated=${p.eliminated} | nombres=[${p.numbers.join(
           ", "
         )}] | x2=${p.hasX2} | +bonus=${p.plusBonus}`
       );
 
-      // SecondChance non utilisée est perdue en fin de tour
+      // SecondChance perdue fin de tour
       p.secondChance = false;
     }
 
-    // dealer next
+    // Donneur suivant
     this.dealerIndex = (this.dealerIndex + 1) % this.players.length;
   }
 
-  // --------------------------------------------------------------------------
-  // Start game loop
-  // --------------------------------------------------------------------------
+  // ==========================================================================
+  // Start
+  // ==========================================================================
   async start() {
-    this.logger.separator();
-    this.logger.log("[GAME] Démarrage Flip 7 (CLI).");
-    this.logger.log(`[GAME] Joueurs: ${this.players.map((p) => p.name).join(", ")}`);
+    this.separator();
+    this.log("[GAME] Démarrage Flip 7.");
+    this.log(`[GAME] Joueurs: ${this.players.map((p) => p.name).join(", ")}`);
+
     if (this.mode === "interactive") {
-      this.logger.log("[GAME] Mode interactif : tape 'a' pour demander un conseil IA à ton tour.");
+      this.log("[GAME] Mode interactif : tape 'a' pour demander un conseil IA à ton tour.");
     } else {
-      this.logger.log(`[GAME] Mode auto : seuil=${this.autoTarget}`);
+      this.log(`[GAME] Mode auto : seuil=${this.autoTarget}`);
     }
 
     let roundNumber = 1;
 
     while (true) {
       await this.playRound(roundNumber);
-
-      // Fin de partie si >= 200 à la fin d'un tour
       if (this.players.some((p) => p.totalScore >= 200)) break;
       roundNumber++;
     }
 
-    // winner
-    this.logger.separator();
-    this.logger.log("[GAME] Fin de partie : un joueur a atteint 200+.");
+    // Winner
+    this.separator();
+    this.log("[GAME] Fin de partie : un joueur a atteint 200+.");
     const sorted = [...this.players].sort((a, b) => b.totalScore - a.totalScore);
     const winner = sorted[0];
 
-    this.logger.log(`[WINNER] ${winner.name} avec ${winner.totalScore} points.`);
-    this.logger.log("[RANKING] Classement final :");
-    sorted.forEach((p, i) => this.logger.log(`  ${i + 1}) ${p.name} - ${p.totalScore}`));
+    this.log(`[WINNER] ${winner.name} avec ${winner.totalScore} points.`);
+    this.log("[RANKING] Classement final :");
+    sorted.forEach((p, i) => this.log(`  ${i + 1}) ${p.name} - ${p.totalScore}`));
+    this.separator();
 
-    this.logger.separator();
-    this.rl.close();
+    // Fermetures propres
+    if (this.io && typeof this.io.close === "function") {
+      this.io.close();
+    }
+    if (this.rl) {
+      this.rl.close();
+    }
   }
 }
 
