@@ -1,3 +1,5 @@
+# Léo Le Calve Deyane SHEIKH Ahmed Amine SABIR
+
 # Flip 7 (CLI) – Projet JavaScript / Node.js
 
 Implémentation **fonctionnelle** du jeu de cartes **Flip 7** en **ligne de commande** (terminal).  
